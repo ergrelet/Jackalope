@@ -33,6 +33,7 @@ limitations under the License.
 #include "sancovinstrumentation.h"
 #else
 #include "tinyinstinstrumentation.h"
+#include "forkserverinstrumentation.h"
 #endif
 
 class PRNG;

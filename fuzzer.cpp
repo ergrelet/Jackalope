@@ -932,7 +932,8 @@ Instrumentation *Fuzzer::CreateInstrumentation(int argc, char **argv, ThreadCont
 #ifdef linux
   SanCovInstrumentation *instrumentation = new SanCovInstrumentation(tc->thread_id);
 #else
-  TinyInstInstrumentation *instrumentation = new TinyInstInstrumentation();
+  // TinyInstInstrumentation *instrumentation = new TinyInstInstrumentation();
+  WinnieForkServerInstrumentation *instrumentation = new WinnieForkServerInstrumentation();
 #endif
   instrumentation->Init(argc, argv);
   return instrumentation;

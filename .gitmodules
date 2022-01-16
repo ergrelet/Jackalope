@@ -1,0 +1,3 @@
+[submodule "forklib"]
+	path = forklib
+	url = https://github.com/ergrelet/forklib.git

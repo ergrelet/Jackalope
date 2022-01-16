@@ -102,7 +102,7 @@ int setup_shmem(const char *name)
 
 // actual target function
 
-void FUZZ_TARGET_MODIFIERS fuzz(char *name) {
+extern "C" void FUZZ_TARGET_MODIFIERS fuzz(char *name) {
   char *sample_bytes = NULL;
   uint32_t sample_size = 0;
   

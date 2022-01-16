@@ -25,6 +25,8 @@ endif()
 
 project("fuzzer")
 
+enable_language(ASM_MASM) 
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/third_party/Mersenne)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/TinyInst)
 
@@ -37,6 +39,9 @@ else()
   set(platform_specific_sources
     tinyinstinstrumentation.h
     tinyinstinstrumentation.cpp
+    forkserverinstrumentation.h
+    forkserverinstrumentation.cpp
+    forkserver_interface.h
   )
 endif()
 
@@ -110,6 +115,22 @@ add_executable(fuzzer
 )
 
 target_link_libraries(fuzzer fuzzerlib)
+
+
+if(WIN32)
+  set(FORKLIB_NOTIFY_CSRSS_FROM_PARENT OFF CACHE BOOL "")
+  set(FORKLIB_RESTORE_STDIO OFF CACHE BOOL "")
+  set(FORKLIB_BUILD_TESTS OFF CACHE BOOL "")
+  add_subdirectory(forklib)
+
+  add_library(forkserver MODULE
+    forkserver.h
+    forkserver.cpp
+    forkserver_interface.h
+    hookcallback.asm
+  )
+  target_link_libraries(forkserver PRIVATE forklib)
+endif()
 
 add_executable(test
   test.cpp
